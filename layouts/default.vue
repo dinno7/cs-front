@@ -4,10 +4,13 @@
 
 <template>
   <div>
-    <Navbar />
-    <div class="wrapper">
+    <header>
+      <Navbar />
+    </header>
+    <main class="wrapper">
       <slot />
       <BaseNotification />
-    </div>
+    </main>
+    <BaseFooter />
   </div>
 </template>
