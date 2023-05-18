@@ -1,6 +1,9 @@
-# Nuxt 3 Minimal Starter
+# Blog front-end project for university
 
+Created by Nuxt v3.5
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+
+UI ==> TailwindCSS
 
 ## Setup
 
@@ -19,7 +22,7 @@ pnpm install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`
+Start the development server on `http://localhost:4000`
 
 ```bash
 npm run dev
