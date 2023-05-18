@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html {
+		font-family: Vazirmatn, sans-serif;
+	}
+	html[dir='rtl'] * {
+		direction: rtl;
+	}
+	html[dir='ltr'] * {
+		direction: ltr;
+	}
+}
+
+@layer utilities {
+	.is-ltr {
+		direction: ltr;
+	}
+	.is-rtl {
+		direction: rtl;
+	}
+}
+
+@layer components {
+	.btn {
+		@apply rounded-md px-3.5 py-1.5 text-base font-semibold  text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+	}
+	.btn-icon {
+		@apply flex items-center justify-between gap-1;
+	}
+	.btn.btn-xs {
+		@apply px-2.5 py-1.5 text-xs;
+	}
+	.btn.btn-sm {
+		@apply px-3 py-2 text-sm leading-4;
+	}
+	.btn.btn-md {
+		@apply px-3.5 py-1.5 text-base;
+	}
+	.btn.btn-lg {
+		@apply px-4 py-2 text-base;
+	}
+	.btn.btn-xl {
+		@apply px-6 py-3 text-base;
+	}
+
+	.btn.btn-secondary {
+		@apply bg-gray-50/10 text-white hover:bg-gray-50/20;
+	}
+
+	.btn.btn-primary {
+		@apply bg-indigo-500 hover:bg-indigo-400 focus-visible:outline-indigo-400;
+	}
+	.btn.btn-primary.btn-light {
+		@apply bg-indigo-200 text-indigo-700 hover:bg-indigo-100 focus:ring-indigo-500;
+	}
+	.btn.btn-danger {
+		@apply bg-rose-500 hover:bg-rose-400 focus-visible:outline-rose-400;
+	}
+	.btn.btn-danger.btn-light {
+		@apply bg-rose-100 text-rose-700 hover:bg-rose-200 focus:ring-rose-500;
+	}
+	.btn.btn-success {
+		@apply bg-emerald-500 hover:bg-emerald-400 focus-visible:outline-emerald-400;
+	}
+	.btn.btn-success.btn-light {
+		@apply bg-emerald-100 text-emerald-700 hover:bg-emerald-200 focus:ring-emerald-500;
+	}
+}
