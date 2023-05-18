@@ -1,9 +1,9 @@
 <template>
   <div class="relative isolate overflow-hidden bg-gray-900">
     <!-- <spline-viewer url="/cloner_flower.spline"></spline-viewer> -->
-    <Global.BackgroundPattern />
-    <div class="flex flex-col lg:flex-row h-full bg-rose-600">
-      <div class="">
+    <GlobalBackgroundPattern />
+    <div class="flex flex-col lg:flex-row lg:items-center py-20 px-20 lg:px-52 h-full">
+      <div class="basis-1/2">
         <img class="h-11" src="~/assets/images/dinnoLogoGreenGradient.svg" alt="Your Company" />
         <h1 class="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">
           وبلاگ شخصی
@@ -22,7 +22,7 @@
               aria-hidden="true">→</span></a>
         </div>
       </div>
-      <div class="">
+      <div class="basis-1/2">
         <img src="~/assets/images/illustrations/main-animated.svg" class="w-[900px]" width="1250" height="900" />
       </div>
     </div>
