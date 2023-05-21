@@ -59,7 +59,7 @@
       </div> -->
       <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-evenly">
         <div>
-          <h3 class="text-sm font-semibold leading-6 text-white">دنبال کردن پست ها</h3>
+          <h3 class="text-lg font-semibold leading-6 text-white">دنبال کردن پست ها</h3>
           <p class="mt-2 text-sm leading-6 text-gray-300">
             با وارد کردن ایمیل خود از آخرین پست های من باخبر بشین.
           </p>

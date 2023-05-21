@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<{
 <style scoped>
 .card {
   overflow: visible;
-  width: 300px;
+  width: 100%;
   height: 400px;
 }
 
@@ -59,6 +59,7 @@ const props = withDefaults(defineProps<{
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  transform: perspective(500px);
   transition: transform 700ms;
   border-radius: 5px;
 }
