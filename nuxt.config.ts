@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+	vite: {
+		vue: {
+			script: {
+				propsDestructure: true,
+			},
+		},
+	},
 	css: ['~/assets/css/fonts.css'],
 	devServer: {
 		port: 4000,
@@ -12,12 +19,14 @@ export default defineNuxtConfig({
 			viewport: 'width=device-width, initial-scale=1',
 			htmlAttrs: {
 				dir: 'rtl',
+				class: 'dark',
 			},
 		},
 	},
 	modules: [
 		'@nuxtjs/tailwindcss',
 		'@vueuse/nuxt',
+		'@nuxtjs/strapi',
 		[
 			'nuxt-headlessui',
 			// >> Headless-ui options
@@ -35,9 +44,16 @@ export default defineNuxtConfig({
 			},
 		],
 	],
-
+	strapi: {
+		// Options
+		url: process.env.BACK_END_URL || 'http://localhost:1337',
+		cookieName: 'token',
+	},
 	runtimeConfig: {
 		// environment: process.env.NODE_ENV,
-		public: {},
+		public: {
+			backAPI: process.env.BACK_END_API,
+			backUrl: process.env.BACK_END_URL,
+		},
 	},
 });
