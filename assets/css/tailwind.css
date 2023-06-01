@@ -12,14 +12,22 @@
 	html[dir='ltr'] * {
 		direction: ltr;
 	}
+	input {
+		@apply border-2 border-indigo-300 focus:border-indigo-500 focus:outline-none rounded-md p-2;
+	}
+	select {
+		@apply border-2 bg-gray-50 border-indigo-300 focus:border-indigo-500 focus:outline-none rounded-md p-2 cursor-pointer;
+	}
 }
 
 @layer utilities {
-	.is-ltr {
-		direction: ltr;
+	.is-ltr,
+	.is-ltr * {
+		direction: ltr !important;
 	}
-	.is-rtl {
-		direction: rtl;
+	.is-rtl,
+	.is-rtl * {
+		direction: rtl !important;
 	}
 }
 
@@ -54,18 +62,34 @@
 		@apply bg-indigo-500 hover:bg-indigo-400 focus-visible:outline-indigo-400;
 	}
 	.btn.btn-primary.btn-light {
-		@apply bg-indigo-200 text-indigo-700 hover:bg-indigo-100 focus:ring-indigo-500;
+		@apply bg-indigo-50 text-indigo-700 hover:bg-indigo-100 focus:ring-indigo-500;
+	}
+	.btn.btn-primary.btn-outlined {
+		@apply border-2 border-indigo-400 text-indigo-50 bg-transparent hover:bg-indigo-500 hover:text-white transition-colors duration-200;
 	}
 	.btn.btn-danger {
 		@apply bg-rose-500 hover:bg-rose-400 focus-visible:outline-rose-400;
 	}
 	.btn.btn-danger.btn-light {
-		@apply bg-rose-100 text-rose-700 hover:bg-rose-200 focus:ring-rose-500;
+		@apply bg-rose-50 text-rose-700 hover:bg-rose-200 focus:ring-rose-500;
+	}
+	.btn.btn-danger.btn-outlined {
+		@apply border-2 border-rose-400 text-rose-50 bg-transparent hover:bg-rose-500 hover:text-white transition-colors duration-200;
 	}
 	.btn.btn-success {
 		@apply bg-emerald-500 hover:bg-emerald-400 focus-visible:outline-emerald-400;
 	}
 	.btn.btn-success.btn-light {
-		@apply bg-emerald-100 text-emerald-700 hover:bg-emerald-200 focus:ring-emerald-500;
+		@apply bg-emerald-50 text-emerald-700 hover:bg-emerald-200 focus:ring-emerald-500;
+	}
+	.btn.btn-success.btn-outlined {
+		@apply border-2 border-emerald-400 text-emerald-50 bg-transparent hover:bg-emerald-500 hover:text-white transition-colors duration-200;
+	}
+
+	.btns > .btn:first-child {
+		@apply rounded-l-none;
+	}
+	.btns > .btn:last-child {
+		@apply rounded-r-none;
 	}
 }
