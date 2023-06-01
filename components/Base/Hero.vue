@@ -14,17 +14,32 @@
           بهبود ابزارهای کاربردی می باشد.
         </p>
         <div class="mt-10 flex items-center gap-x-6">
-          <a href="#" class="btn btn-primary btn-icon">
-            <Icon name="heroicons:envelope" size="20px" />
+          <NuxtLink to="/auth/register" class="btn btn-primary btn-icon">
+            <VIcon name="heroicons:envelope" size="20px" />
             دنبال کردن
+          </NuxtLink>
+          <a href="#" class="text-base font-semibold leading-7 text-white">
+            مطالعه بیشتر
+            <span aria-hidden="true" class="m-1">→</span>
           </a>
-          <a href="#" class="text-base font-semibold leading-7 text-white">Learn more <span
-              aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="basis-1/2">
-        <img src="~/assets/images/illustrations/main-animated.svg" class="w-[900px]" width="1250" height="900" />
+        <img class="bounse-animate" src="~/assets/images/illustrations/main-animated.png" width="1024" height="900" />
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.bounse-animate {
+  animation: bounce 2s infinite ease-in-out alternate;
+}
+
+@keyframes bounce {
+  to {
+    transform: translateY(-40px);
+  }
+
+}
+</style>

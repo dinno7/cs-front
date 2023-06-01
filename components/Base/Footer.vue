@@ -15,7 +15,7 @@
 <template>
   <footer class="bg-gray-900" aria-labelledby="footer-heading">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
-    <div class="w-full px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+    <div class="w-full px-6 pb-8  lg:px-8">
       <!-- <div class="xl:grid xl:grid-cols-3 xl:gap-8">
         <img class="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Company name" />
         <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div> -->
-      <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-evenly">
+      <div class="border-t border-white/10 pt-8   lg:flex lg:items-center lg:justify-evenly">
         <div>
           <h3 class="text-lg font-semibold leading-6 text-white">دنبال کردن پست ها</h3>
           <p class="mt-2 text-sm leading-6 text-gray-300">
@@ -67,11 +67,11 @@
         <form class="mt-6 sm:flex sm:max-w-md lg:mt-0">
           <label for="email-address" class="sr-only">Email address</label>
           <input type="email" name="email-address" id="email-address" autocomplete="email" required="true"
+            v-model="userEmail"
             class="w-full min-w-0 appearance-none rounded-md border-white/10 bg-gray-400/10 px-[calc(theme(spacing.3)-1px)] py-[calc(theme(spacing[1.5])-1px)] text-base leading-7 text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:w-56 sm:text-sm sm:leading-6"
             placeholder="ایمیل خود را وارد کنید" />
-          <div class="mt-4 rounded-md sm:mt-0 sm:mr-4 sm:flex-shrink-0">
-            <button type="submit" class="btn btn-primary">دنبال کردن</button>
-          </div>
+          <button @click="registerByEmail" type="submit"
+            class="btn btn-primary mt-4 rounded-md sm:mt-0 sm:mr-4 sm:flex-shrink-0">دنبال کردن</button>
         </form>
       </div>
       <div
@@ -190,5 +190,15 @@ const navigation = {
       }),
     },
   ],
+
+}
+
+const userEmail = ref(null)
+const registerByEmail = () => {
+  navigateTo({
+    name: 'auth-register', query: {
+      email: userEmail.value
+    }
+  })
 }
 </script>
