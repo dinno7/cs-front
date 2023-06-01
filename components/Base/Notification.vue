@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { NOTIFICATION_TYPES } from '~/utils/types';
+
 const { notifications, removeNotification } = useNotification()
 
 </script>
@@ -14,22 +16,31 @@ const { notifications, removeNotification } = useNotification()
         enter-to-class="translate-y-0 opacity-100 sm:translate-x-0" leave-active-class="transition ease-ins duration-250"
         leave-from-class="opacity-100" move-class="absolute"
         leave-to-class="opacity-0 translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2">
-        <div v-for=" notification  in  notifications " :key="notification.id"
-          class="pointer-events-auto w-80 border-2 border-indigo-500/50 max-w-sm overflow-hidden rounded-lg bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
+        <div v-for=" notification  in  notifications " :key="notification.id" :class="{
+            'border-emerald-500/50': notification.type === NOTIFICATION_TYPES.success,
+            'border-rose-500/50': notification.type === NOTIFICATION_TYPES.error,
+            'border-sky-500/50': notification.type === NOTIFICATION_TYPES.info,
+          }"
+          class="pointer-events-auto w-80 border-2 max-w-sm overflow-hidden rounded-lg bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
           <div class="p-4">
             <div class="flex items-start">
               <div class="flex-shrink-0">
-                <Icon name="heroicons:check-circle" class="h-6 w-6 text-green-400" aria-hidden="true" />
+                <VIcon v-if="notification.type === NOTIFICATION_TYPES.success" name="heroicons:check-circle"
+                  class="h-6 w-6 text-emerald-400" aria-hidden="true" />
+                <VIcon v-else-if="notification.type === NOTIFICATION_TYPES.error" name="heroicons:exclamation-triangle"
+                  class="h-6 w-6 text-rose-400" aria-hidden="true" />
+                <VIcon v-else-if="notification.type === NOTIFICATION_TYPES.info" name="heroicons:information-circle"
+                  class="h-6 w-6 text-sky-400" aria-hidden="true" />
               </div>
               <div class="mr-3 w-0 flex-1 pt-0.5">
-                <p class="text-sm font-medium text-gray-50">{{ notification.title }}</p>
-                <p class="mt-1 text-sm text-gray-300 break-words">{{ notification.msg }}</p>
+                <p v-if="notification.title" class="mb-1 text-sm font-medium text-gray-50">{{ notification.title }}</p>
+                <p class="text-sm text-gray-300 break-words">{{ notification.msg }}</p>
               </div>
               <div class="mr-4 flex flex-shrink-0">
                 <button type="button" @click="removeNotification(notification.id)"
-                  class="inline-flex rounded-md bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  class="inline-flex rounded-md bg-transparent text-gray-300 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 ">
                   <span class="sr-only">Close</span>
-                  <Icon name="heroicons:x-mark" class="h-5 w-5" />
+                  <VIcon name="heroicons:x-mark" class="h-5 w-5" />
                 </button>
               </div>
             </div>
