@@ -20,7 +20,7 @@ const postBrief = computed(() => {
 </script>
 
 <template>
-  <GlobalCardFlip :frontImg="post.image.url || ''" :backImg="post.image.url || ''">
+  <GlobalCardFlip :frontImg="post?.image?.formats?.small?.url || ''" :backImg="post?.image?.formats?.small?.url || ''">
     <template #front>
       <div class="bg-gray-900/20 rounded-md backdrop-filter backdrop-blur-sm p-5">
         <p class="font-bold text-2xl">{{ post?.title }}</p>
@@ -37,7 +37,7 @@ const postBrief = computed(() => {
 
         <div class="contents">
           <p class="font-bold text-lg text-white px-2">{{ post.title }}</p>
-          <div v-html="postBrief" class="text-sm text-gray-200 text-justify pt-1 px-3 post-description">
+          <div v-html="postBrief" class="text-sm text-gray-200 text-justify pt-1 px-3 line-clamp-[8]">
           </div>
         </div>
       </div>
@@ -146,12 +146,5 @@ const postBrief = computed(() => {
   position: absolute;
   inset: 0;
   transform: scale(1.2);
-}
-
-.post-description {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 8;
-  -webkit-box-orient: vertical;
 }
 </style>
