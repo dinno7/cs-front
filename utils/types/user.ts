@@ -1,4 +1,4 @@
-import { NullishString } from '.';
+import { Image } from './global';
 
 export interface UserInfoRegistration {
 	username: string;
@@ -25,4 +25,6 @@ export interface User {
 	firstName: string;
 	lastName: string;
 	isAdmin: boolean;
+	avatar: Image;
+	field: string;
 }

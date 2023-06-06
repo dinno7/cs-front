@@ -12,3 +12,9 @@ export function normalizedStrapiImgSrcs(content: string) {
 	content = content.replace(pattern, (match) => `${envs.backUrl}${match}`);
 	return content;
 }
+
+export function userAvatar(url: string): string {
+	const avatarUrl = url;
+	if (avatarUrl) return normalizedStrapiImgSrcs(avatarUrl);
+	return '/images/user-photo.png';
+}

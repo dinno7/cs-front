@@ -1,3 +1,6 @@
+import { Image } from './global';
+import { User } from './user';
+
 export interface Post {
 	uuid: string;
 	id: number;
@@ -7,38 +10,10 @@ export interface Post {
 	createdAt: string;
 	updatedAt: string;
 	publishedAt: string;
+	author: User;
 	category: PostCategory;
 	comments: PostComment[];
-	image: PostImage;
-}
-
-export interface PostImage extends PostImageFormat {
-	id: number;
-	alternativeText: null | string;
-	caption: null | string;
-	previewUrl?: null | string;
-	provider: string;
-	provider_metadata: null | string;
-	createdAt: string;
-	updatedAt: string;
-	formats: {
-		thumbnail: PostImageFormat;
-		small: PostImageFormat;
-		medium: PostImageFormat;
-		large: PostImageFormat;
-	};
-}
-
-export interface PostImageFormat {
-	name: string;
-	hash: string;
-	ext: string;
-	mime: string;
-	path?: null | string;
-	width: number;
-	height: number;
-	size: number;
-	url: string;
+	image: Image;
 }
 
 export interface PostComment {
@@ -48,6 +23,9 @@ export interface PostComment {
 	createdAt: string;
 	updatedAt: string;
 	publishedAt: string;
+	fullName: string;
+	author: User;
+	post: Post;
 }
 
 export interface PostCategory {
