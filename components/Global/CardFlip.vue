@@ -17,7 +17,7 @@ const backImg = computed(() => props.backImg ? conf.backUrl + props.backImg : '/
 
 <template>
   <div class="card">
-    <div class="content shadow-lg shadow-indigo-100/20">
+    <div class="content shadow-lg shadow-blue-100/20">
       <div class="front">
         <div class="front-content" :style="{ backgroundImage: `url(${frontImg})` }">
           <slot name="front" />
@@ -102,6 +102,7 @@ const backImg = computed(() => props.backImg ? conf.backUrl + props.backImg : '/
   justify-content: center;
   align-items: center;
   gap: 30px;
+  background-position: center;
 }
 
 .card:hover .content {
@@ -137,6 +138,7 @@ const backImg = computed(() => props.backImg ? conf.backUrl + props.backImg : '/
   position: absolute;
   inset: 0;
   transform: scale(1.2);
+  background-position: left;
 }
 
 .post-description {
