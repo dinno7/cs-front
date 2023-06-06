@@ -22,6 +22,7 @@ export default defineNuxtConfig({
 				class: 'dark',
 			},
 		},
+		pageTransition: { name: 'page', mode: 'out-in' },
 	},
 	modules: [
 		'@nuxtjs/tailwindcss',
