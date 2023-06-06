@@ -6,7 +6,7 @@ const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
   imageUrl:
-    '~/assets/images/user-photo.png',
+    '/images/user-photo.png',
 }
 
 const navigation = [
@@ -16,7 +16,7 @@ const navigation = [
   { title: 'تماس با من', name: 'contact-me', href: '/contact-me', },
 ]
 
-const { logout } = useStrapiAuth();
+const { logout, fetchUser } = useStrapiAuth();
 
 const { addNotification } = useNotification();
 
@@ -31,7 +31,12 @@ const logOut = () => {
   addNotification('شما با موفقیت خارج شدید', NOTIFICATION_TYPES.error, '', 5000)
 }
 
-const $user = useStrapiUser<User>()
+const $user = await fetchUser()
+const userAvatar = computed(() => {
+  const avatarUrl = $user.value?.avatar?.url
+  if (avatarUrl) return normalizedStrapiImgSrcs(avatarUrl)
+  return '/images/user-photo.png'
+})
 
 </script>
 <template>
@@ -49,9 +54,9 @@ const $user = useStrapiUser<User>()
       </div>
     </template>
   </GlobalModal>
-  <HeadlessDisclosure as="nav" class="bg-gray-800" v-slot="{ open }">
-    <div class="mx-auto container px-2 sm:px-4 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
+  <HeadlessDisclosure as="nav" class="bg-gray-800 h-20" v-bind="$attrs" v-slot="{ open }">
+    <div class="mx-auto container px-2  sm:px-4 h-full lg:px-8">
+      <div class="relative flex h-full items-center justify-between">
         <div class="flex items-center px-2 lg:px-0">
           <NuxtLink to="/" class="flex-shrink-0">
             <img class="h-8 w-auto lg:block" src="~/assets/images/dinnoLogoGreenGradient.svg" alt="Your Company" />
@@ -65,16 +70,16 @@ const $user = useStrapiUser<User>()
             </div>
           </div>
         </div>
-        <div class="flex flex-1 justify-center px-2 lg:mr-6 lg:justify-end">
+        <div class="flex flex-1 justify-center px-2 lg:mr-6 lg:justify-center">
           <div class="w-full max-w-lg lg:max-w-xs">
-            <label for="search" class="sr-only">Search</label>
+            <label for="search" class="sr-only">جستوجو</label>
             <div class="relative">
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <VIcon name="heroicons:magnifying-glass" class="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
               <input id="search" name="search"
                 class="block w-full rounded-md border border-transparent bg-gray-700 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-white focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-white sm:text-sm"
-                placeholder="Search" type="search" />
+                placeholder="جستوجو" type="search" />
             </div>
           </div>
         </div>
@@ -87,21 +92,21 @@ const $user = useStrapiUser<User>()
             <VIcon name="heroicons:x-mark" v-else class="block h-6 w-6" aria-hidden="true" />
           </HeadlessDisclosureButton>
         </div>
-        <div class="hidden lg:mr-4 lg:block">
+        <div class="hidden lg:mr-4 lg:block" v-if="$user">
           <div class="flex items-center">
             <HeadlessMenu as="div" class="relative mr-4 flex-shrink-0">
               <div>
                 <HeadlessMenuButton
-                  class="flex rounded-full bg-gray-800 text-sm text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                  class="flex rounded-full bg-gray-800  text-sm text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="~/assets/images/user-photo.png" alt="" />
+                  <img class="h-8 w-8 rounded-full" :src="userAvatar" alt="" />
                 </HeadlessMenuButton>
                 <transition enter-active-class="transition ease-out duration-100"
                   enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
                   leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
                   leave-to-class="transform opacity-0 scale-95">
                   <HeadlessMenuItems
-                    class="absolute border-2 border-gray-700 left-0 z-10 mt-4 w-48 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    class="absolute border-2 border-gray-700 left-0 z-10 mt-4 w-48 origin-top-right rounded-md bg-gray-800  py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <HeadlessMenuItem v-slot="{ active }">
                       <p :class="[active ? 'bg-gray-700' : '', 'block px-4 py-2 text-sm text-gray-50']">
                         {{ $user?.firstName + ' ' + $user?.lastName }}
@@ -121,11 +126,11 @@ const $user = useStrapiUser<User>()
         </div>
 
         <div class="hidden lg:inline-block">
-          <div class="btns mr-10" v-if="!$user">
-            <NuxtLink to="/auth/register" class="btn btn-primary ">
+          <div class="mr-10 flex items-center justify-start gap-5" v-if="!$user">
+            <NuxtLink to="/auth/register" class="btn btn-primary btn-sm">
               ثبت نام
             </NuxtLink>
-            <NuxtLink to="/auth/login" class="btn btn-primary btn-light">
+            <NuxtLink to="/auth/login" class="text-sm hover:text-blue-200">
               ورود
             </NuxtLink>
           </div>
@@ -136,17 +141,22 @@ const $user = useStrapiUser<User>()
 
 
     <!-- // Mobile -->
-    <HeadlessDisclosurePanel class="lg:hidden">
+    <HeadlessDisclosurePanel class="lg:hidden bg-gray-800">
       <div class="space-y-1 px-2 pt-2 pb-3">
-        <NuxtLink v-for=" route  in  navigation " :to="{ name: route.name }"
+        <NuxtLink v-for="  route   in   navigation  " :to="{ name: route.name }"
           class="route block rounded-md px-3 py-2 text-base font-medium text-white">
           {{ route.title }}
         </NuxtLink>
+        <div v-if="$user">
+          <button
+            class="block rounded-md px-3 py-2 text-base font-medium text-white bg-rose-500/10 hover:bg-rose-500 w-full text-right transition-colors"
+            @click="showLogoutModal">خروج</button>
+        </div>
       </div>
       <div class="border-t border-gray-700 pt-4 pb-3  flex items-center justify-between pr-2 pl-4">
-        <div class="flex items-center px-5">
+        <div class="flex items-center px-5" v-if="$user">
           <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" src="~/assets/images/user-photo.png" alt="User image" />
+            <img class="h-10 w-10 rounded-full" :src="userAvatar" alt="User image" />
           </div>
           <div class="mr-3">
             <div class="text-base font-medium text-white">Tom Cook</div>
@@ -154,15 +164,12 @@ const $user = useStrapiUser<User>()
           </div>
         </div>
 
-        <div>
-          <div class="mr-10" v-if="$user">
-            <button class="btn btn-danger !rounded-md" @click="logOut">خروج</button>
-          </div>
-          <div class="btns mr-10" v-else>
-            <NuxtLink to="/auth/register" class="btn btn-primary ">
+        <div class="mx-3" v-else>
+          <div class="flex items-center justify-start gap-3">
+            <NuxtLink to="/auth/register" class="btn btn-primary btn-sm">
               ثبت نام
             </NuxtLink>
-            <NuxtLink to="/auth/login" class="btn btn-primary btn-light">
+            <NuxtLink to="/auth/login" class="text-sm hover:text-blue-200">
               ورود
             </NuxtLink>
           </div>
