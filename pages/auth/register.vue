@@ -11,20 +11,21 @@ definePageMeta({
   }
 })
 
+// >> Composable
+const { addNotification } = useNotification();
+const { register } = useStrapiAuth();
+const router = useRouter();
+const route = useRoute();
+
 // >> Data
 const userInfo = reactive<UserInfoRegistration>({
   username: '',
-  email: '',
+  email: route.query.email || '',
   firstName: '',
   lastName: '',
   password: '',
 })
 const errorMsgs = ref<string[]>([])
-
-// >> Composable
-const { addNotification } = useNotification();
-const { register } = useStrapiAuth();
-const router = useRouter();
 
 // >> Functions
 const submitForm = async () => {
@@ -55,7 +56,10 @@ const submitForm = async () => {
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
           <img class="h-12 w-auto" src="~/assets/images/dinnoLogoGreenGradient.svg" alt="Dinno" />
-          <h2 class="mt-6 text-3xl font-extrabold text-gray-50">پیوسن به من</h2>
+          <h2 class="mt-6 mb-3 text-3xl font-extrabold text-gray-50">پیوسن به من</h2>
+          <NuxtLink class="text-blue-400 hover:text-blue-300 text-lg"
+            :to="{ name: 'auth-login', query: { email: $route.query.email } }">قبلا ثبت نام کردید؟
+          </NuxtLink>
         </div>
         <GlobalAlertList v-if="errorMsgs.length" title="متاسفانه مشکلی پیش آمده است" :items="errorMsgs"
           class="mb-10 mt-5" />
@@ -115,31 +119,34 @@ const submitForm = async () => {
           <div class="mt-6">
             <form @submit.prevent="submitForm" method="POST" class="space-y-6">
               <div>
-                <label for="username" class="block text-sm font-medium text-gray-50"> نام کاربری </label>
+                <label for="username" class="block text-sm font-medium text-gray-50">
+                  نام کاربری
+                  <span class="text-xs">(به انگلیسی)</span>
+                </label>
                 <div class="mt-1">
-                  <input type="text" v-model="userInfo.username" id="username" required="true"
-                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <input type="text" dir="ltr" v-model="userInfo.username" id="username" required="true"
+                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
               <div>
                 <label for="firstName" class="block text-sm font-medium text-gray-50"> نام </label>
                 <div class="mt-1">
                   <input type="text" v-model="userInfo.firstName" id="firstName" required="true"
-                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
               <div>
                 <label for="lastName" class="block text-sm font-medium text-gray-50"> نام خانوادگی </label>
                 <div class="mt-1">
                   <input type="text" v-model="userInfo.lastName" id="lastName" required="true"
-                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-50">ایمیل</label>
                 <div class="mt-1">
-                  <input type="email" v-model="userInfo.email" autocomplete="email" id="email" required="true"
-                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <input type="email" dir="ltr" v-model="userInfo.email" autocomplete="email" id="email" required="true"
+                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
 
@@ -150,13 +157,13 @@ const submitForm = async () => {
                 <div class="mt-1">
                   <input id="password" name="password" type="password" autocomplete="current-password" required="true"
                     v-model="userInfo.password"
-                    class="appearance-none text-white caret-gray-50 block w-full px-3 py-2 border border-gray-600 bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                    class="appearance-none text-white caret-gray-50 block w-full px-3 py-2 border border-gray-600 bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="!mt-10">
                 <button type="submit"
-                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">ثبت
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">ثبت
                   نام</button>
               </div>
             </form>

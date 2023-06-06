@@ -12,18 +12,18 @@ definePageMeta({
   }
 })
 
-// >> Data
-const userInfo = reactive<UserInfoLogin>({
-  identifier: '',
-  password: ''
-})
-const errorMsgs = ref<string[]>([])
-
 // >> Composable
 const { addNotification } = useNotification();
 const { login } = useStrapiAuth();
 const router = useRouter();
+const route = useRoute();
 
+// >> Data
+const userInfo = reactive<UserInfoLogin>({
+  identifier: route.query.email || '',
+  password: ''
+})
+const errorMsgs = ref<string[]>([])
 
 // >> Functions
 const submitForm = async () => {
@@ -47,7 +47,11 @@ const submitForm = async () => {
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
           <img class="h-12 w-auto" src="~/assets/images/dinnoLogoGreenGradient.svg" alt="Dinno" />
-          <h2 class="mt-6 text-3xl font-extrabold text-gray-50">ورود به اکانت</h2>
+          <h2 class="mt-6 mb-3 text-3xl font-extrabold text-gray-50">ورود به اکانت</h2>
+          <NuxtLink class="text-blue-400 hover:text-blue-300 text-lg"
+            :to="{ name: 'auth-register', query: { email: $route.query.email } }">
+            اکانت ندارید؟
+          </NuxtLink>
         </div>
         <GlobalAlertList v-if="errorMsgs.length" title="متاسفانه مشکلی پیش آمده است" :items="errorMsgs"
           class="mb-10 mt-5" />
@@ -110,26 +114,26 @@ const submitForm = async () => {
                 <label for="email" class="block text-sm font-medium text-gray-50"> ایمیل یا نام کاربری </label>
                 <div class="mt-1">
                   <input type="text" v-model="userInfo.identifier" autocomplete="email" required="true"
-                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                    class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="space-y-1">
                 <label for="password" class="flex items-center justify-between text-sm font-medium text-gray-50">
                   <span>رمزعبور</span>
-                  <NuxtLink class="text-indigo-400 hover:text-indigo-300 font-bold" to="/auth/resetPassword">رمز خود را
+                  <NuxtLink class="text-blue-400 hover:text-blue-300 font-bold" to="/auth/resetPassword">رمز خود را
                     فراموش کردید؟</NuxtLink>
                 </label>
                 <div class="mt-1">
                   <input id="password" name="password" type="password" autocomplete="current-password" required="true"
                     v-model="userInfo.password"
-                    class="appearance-none text-white caret-gray-50 block w-full px-3 py-2 border border-gray-600 bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                    class="appearance-none text-white caret-gray-50 block w-full px-3 py-2 border border-gray-600 bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="!mt-10">
                 <button type="submit"
-                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">ورود</button>
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">ورود</button>
               </div>
             </form>
           </div>
