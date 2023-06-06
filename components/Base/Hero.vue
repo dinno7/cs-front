@@ -2,7 +2,7 @@
   <div class="relative isolate overflow-hidden bg-gray-900">
     <!-- <spline-viewer url="/cloner_flower.spline"></spline-viewer> -->
     <GlobalBackgroundPattern />
-    <div class="flex flex-col lg:flex-row lg:items-center py-20 px-20 lg:px-52 h-full">
+    <div class="flex flex-col lg:flex-row lg:items-center pb-20 px-20 lg:px-52 h-full">
       <div class="basis-1/2">
         <img class="h-11" src="~/assets/images/dinnoLogoGreenGradient.svg" alt="Your Company" />
         <h1 class="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">
@@ -25,7 +25,8 @@
         </div>
       </div>
       <div class="basis-1/2">
-        <img class="bounse-animate" src="~/assets/images/illustrations/main-animated.png" width="1024" height="900" />
+        <img class="bounse-animate w-[80%] md:w-[40%] lg:w-[80%] lg:ml-0 mx-auto mt-16"
+          src="~/assets/images/illustrations/main-animated.png" width="550" height="400" />
       </div>
     </div>
   </div>
@@ -38,7 +39,7 @@
 
 @keyframes bounce {
   to {
-    transform: translateY(-40px);
+    transform: translateY(-20px);
   }
 
 }
