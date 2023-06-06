@@ -17,7 +17,7 @@
     <h2 id="footer-heading" class="sr-only">Footer</h2>
     <div class="w-full px-6 pb-8  lg:px-8">
       <!-- <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <img class="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Company name" />
+        <img class="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=500" alt="Company name" />
         <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
@@ -57,21 +57,21 @@
           </div>
         </div>
       </div> -->
-      <div class="border-t border-white/10 pt-8   lg:flex lg:items-center lg:justify-evenly">
+      <div v-if="!$user && !$user?.id" class="border-t border-white/10 pt-8   lg:flex lg:items-center lg:justify-evenly">
         <div>
           <h3 class="text-lg font-semibold leading-6 text-white">دنبال کردن پست ها</h3>
           <p class="mt-2 text-sm leading-6 text-gray-300">
             با وارد کردن ایمیل خود از آخرین پست های من باخبر بشین.
           </p>
         </div>
-        <form class="mt-6 sm:flex sm:max-w-md lg:mt-0">
+        <form @submit.prevent="registerByEmail" class="mt-6 sm:flex sm:max-w-md lg:mt-0">
           <label for="email-address" class="sr-only">Email address</label>
           <input type="email" name="email-address" id="email-address" autocomplete="email" required="true"
             v-model="userEmail"
-            class="w-full min-w-0 appearance-none rounded-md border-white/10 bg-gray-400/10 px-[calc(theme(spacing.3)-1px)] py-[calc(theme(spacing[1.5])-1px)] text-base leading-7 text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:w-56 sm:text-sm sm:leading-6"
-            placeholder="ایمیل خود را وارد کنید" />
-          <button @click="registerByEmail" type="submit"
-            class="btn btn-primary mt-4 rounded-md sm:mt-0 sm:mr-4 sm:flex-shrink-0">دنبال کردن</button>
+            class="w-full min-w-0 appearance-none rounded-md border-white/10 bg-gray-400/10 px-[calc(theme(spacing.3)-1px)] py-[calc(theme(spacing[1.5])-1px)] text-base leading-7 text-white placeholder-gray-500 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:w-56 sm:text-sm sm:leading-6"
+            placeholder="ایمیل خود را وارد کنید" :required="true" />
+          <button type="submit" class="btn btn-primary mt-4 rounded-md sm:mt-0 sm:mr-4 sm:flex-shrink-0">دنبال
+            کردن</button>
         </form>
       </div>
       <div
@@ -193,12 +193,18 @@ const navigation = {
 
 }
 
+const $user = useStrapiUser()
+
 const userEmail = ref(null)
 const registerByEmail = () => {
-  navigateTo({
-    name: 'auth-register', query: {
-      email: userEmail.value
-    }
-  })
+  if (userEmail.value) {
+    navigateTo({
+      name: 'auth-register', query: {
+        email: userEmail.value
+      }
+    })
+  }
+  return
+
 }
 </script>
