@@ -1,7 +1,7 @@
 import type { UseFetchOptions, AsyncDataOptions } from 'nuxt/app';
 export class useRequest<T> {
 	private envs = useRuntimeConfig();
-	private userAuth = useCookie('toekn');
+	private userAuth = useCookie('token');
 	public defaults: UseFetchOptions<T> = {
 		headers: this.userAuth.value
 			? { Authorization: `Bearer ${this.userAuth.value}` }
