@@ -28,3 +28,10 @@ export interface ImageFormat {
 	size: number;
 	url: string;
 }
+
+export interface RequestQuery {
+	populate: string | string[];
+	filter: string | string[];
+	sort: string | string[];
+	fields: string | string[];
+}
