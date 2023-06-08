@@ -27,7 +27,8 @@ const postImage = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row  items-center justify-start md:max-h-[300px] md:h-[300px]  rounded-lg ">
+  <div
+    class="flex flex-col md:flex-row  items-center justify-start md:max-h-[300px] md:h-[300px] transition-all rounded-2xl hover:bg-gray-800 hover:scale-110 ">
     <div class="h-74 md:h-full md:w-5/12 rounded-2xl overflow-hidden max-w-full  md:max-w-[300px] md:max-h-[300px]"
       width="300" height="300">
       <img class="object-cover object-center w-full md:h-full md:aspect-square" :src="postImage" alt="Post image">
@@ -39,14 +40,16 @@ const postImage = computed(() => {
             moment(post.createdAt).locale('fa').format('DD MMMM YYYY ساعت HH:mm')
           }}
         </p>
+        <p v-if="post?.category?.name" class="bg-gray-700 text-gray-200 mt-3 w-max py-1 px-2 text-sm rounded-lg">{{
+          post.category.name }}</p>
       </div>
-      <div class="my-7">
+      <div class="mb-7 mt-5">
         <h2 class="mb-2 font-bold text-gray-900 text-lg dark:text-gray-50">{{ post.title }}</h2>
         <p class="line-clamp-5 text-justify dark:text-gray-400">
           {{ post.brief || 'برای مشاهده کامل این پست میتوانید روی این پست کلیک کرده تا وارد صفحه این پست شوید' }}
         </p>
       </div>
-      <div class="flex gap-2 items-center justify-between border-t-2  w-full pt-5 border-gray-800 ">
+      <div class="flex gap-2 items-center justify-between border-t-2  w-full pt-5 border-gray-700 ">
         <PostAuthor :author="post.author" v-if="post?.author?.id" />
         <p class="text-sm text-gray-500 pb-1 self-end">
           آخرین آپدیت
