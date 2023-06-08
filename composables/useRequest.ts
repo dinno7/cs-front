@@ -1,43 +1,60 @@
-import type { UseFetchOptions, AsyncDataOptions } from 'nuxt/app';
-export class useRequest<T> {
-	private envs = useRuntimeConfig();
-	private userAuth = useCookie('token');
-	public defaults: UseFetchOptions<T> = {
-		headers: this.userAuth.value
-			? { Authorization: `Bearer ${this.userAuth.value}` }
+import { AsyncDataOptions, UseFetchOptions } from 'nuxt/app';
+import { RequestQuery } from '~/utils/types';
+
+export function useRequest<T>(
+	key?: string,
+	asyncDataOptions?: AsyncDataOptions<T>,
+) {
+	type fetchOption = (UseFetchOptions<T> & { query: RequestQuery }) | {};
+	const userAuth = useCookie('token');
+	const { public: envs } = useRuntimeConfig();
+
+	const defaults: UseFetchOptions<T> = {
+		headers: userAuth.value
+			? { Authorization: `Bearer ${userAuth.value}` }
 			: {},
 	};
-	constructor(
-		public key: string,
-		public asyncDataOptions?: AsyncDataOptions<T>,
-	) {}
+	function get(url: string, options: fetchOption = {}) {
+		defaults.method = 'GET';
 
-	public get(url: string, options: UseFetchOptions<T> = {}) {
-		this.defaults.method = 'GET';
-
-		const params = { ...this.defaults, ...options };
-
+		const params: any = { ...defaults, ...options };
+		url = normalizedUrl(url);
 		return useAsyncData(
-			this.key,
-			(): Promise<T> => $fetch(this.envs.public.backAPI + url, params),
-			this.asyncDataOptions,
+			key || 'Request-' + Math.floor(Math.random() * 1000),
+			(): Promise<T> => $fetch(url, params),
+			asyncDataOptions,
 		);
 	}
 
-	public post(url: string, body: any, options: UseFetchOptions<T> = {}) {
-		this.defaults.method = 'POST';
-		this.defaults.body = body;
+	function post(url: string, body: any, options: fetchOption = {}) {
+		defaults.method = 'POST';
+		defaults.body = body;
 
-		const params = { ...this.defaults, ...options };
+		const params: any = { ...defaults, ...options };
+		url = normalizedUrl(url);
 
 		return useAsyncData(
-			this.key,
-			(): Promise<T> => $fetch(this.envs.public.backAPI + url, params),
-			this.asyncDataOptions,
+			key || 'Request-' + Math.floor(Math.random() * 1000),
+			(): Promise<T> => $fetch(url, params),
+			asyncDataOptions,
 		);
 	}
+
+	return {
+		get,
+		post,
+	};
+}
+
+function normalizedUrl(url: string): string {
+	const { public: envs } = useRuntimeConfig();
+	if (url.startsWith('!')) {
+		return url.slice(1);
+	}
+	return envs.backAPI + url;
 }
 
 // >> Usage example:
 
-// const {data, error,execute,pending,refresh} =await new useRequest('<AsyncData-key>',{<AsyncDataOptions>}).get('<URL>',{<FetchOptions>})
+// const {data, error,execute,pending,refresh} =await useRequest<Response type>('<AsyncData-key>',{<AsyncDataOptions>}).get('<URL>',{<FetchOptions>})
+// const {data, error,execute,pending,refresh} =await useRequest<Response type>('<AsyncData-key>',{<AsyncDataOptions>}).post('<URL>',body,{<FetchOptions>})
