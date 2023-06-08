@@ -99,7 +99,7 @@ await fetchPosts()
         <h1 class="font-bold text-4xl">مقالات</h1>
         <p class="py-4 font-medium text-lg text-gray-300">در این صفحه شما میتوانید موجود را بخوانید</p>
       </div>
-      <GlobalPagination v-if="pagination.pageCount" class="mb-20" :pagination="pagination" @page:next="goNextPage"
+      <GlobalPagination v-if="pagination.pageCount > 1" class="mb-20" :pagination="pagination" @page:next="goNextPage"
         @page:prev="goPrevPage" @page:number="goPage" />
       <transition mode="out-in" enter-active-class="ease-in-out duration-250 transition" enter-from-class="opacity-0"
         enter-to-class="opacity-100" leave-active-class="transition ease-ins duration-250" leave-from-class="opacity-100"
@@ -119,7 +119,7 @@ await fetchPosts()
           </NuxtLink>
         </div>
       </transition>
-      <GlobalPagination v-if="pagination.pageCount" class="mt-20" :pagination="pagination" @page:next="goNextPage"
+      <GlobalPagination v-if="pagination.pageCount > 1" class="mt-20" :pagination="pagination" @page:next="goNextPage"
         @page:prev="goPrevPage" @page:number="goPage" />
     </div>
   </div>
