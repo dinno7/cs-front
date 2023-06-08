@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors');
+
 module.exports = {
 	darkMode: 'class',
 	content: [
@@ -9,7 +11,11 @@ module.exports = {
 		'./nuxt.config.{js,ts}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				'bg-main': colors.gray['900'],
+			},
+		},
 	},
 	plugins: [],
 };

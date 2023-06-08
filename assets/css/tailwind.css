@@ -18,6 +18,12 @@
 	select {
 		@apply border-2 bg-gray-50 border-blue-300 focus:border-blue-500 focus:outline-none rounded-md p-2 cursor-pointer;
 	}
+	ul {
+		list-style: disc;
+		list-style-position: inside;
+		padding: 10px;
+	}
+
 	.container {
 		@apply px-5;
 	}
