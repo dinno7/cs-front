@@ -35,6 +35,7 @@ const submitForm = async () => {
     addNotification('اکانت شما با موفقیت ساخته شد.', NOTIFICATION_TYPES.success)
     const previousRouteExist = router.options.history.state.back;
     previousRouteExist ? router.back() : navigateTo('/')
+    await useUser()
   } catch (error) {
     errorMsgs.value.push()
     setTimeout(() => {

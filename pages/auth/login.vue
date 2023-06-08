@@ -33,6 +33,7 @@ const submitForm = async () => {
     addNotification('شما با موفقیت وارد شدید.', NOTIFICATION_TYPES.success)
     const previousRouteExist = router.options.history.state.back;
     previousRouteExist ? router.back() : navigateTo('/')
+    await useUser()
   } catch (error) {
     errorMsgs.value.push('نام کاربری یا کلمه عبور اشتباه است.')
   }
