@@ -1,22 +1,16 @@
 <script setup lang="ts">
 import { NOTIFICATION_TYPES } from "~/utils/types";
-import type { User } from '~/utils/types'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    '/images/user-photo.png',
-}
-
+const { user } = await useUser();
 const navigation = [
   { title: 'خانه', name: 'index', href: '/', },
   { title: 'پست ها', name: 'posts', href: '/posts', },
-  { title: 'درباره من', name: 'about-me', href: '/about-me', },
-  { title: 'تماس با من', name: 'contact-me', href: '/contact-me', },
+  // { title: 'درباره من', name: 'about-me', href: '/about-me', },
+  // { title: 'تماس با من', name: 'contact-me', href: '/contact-me', },
 ]
 
-const { logout, fetchUser } = useStrapiAuth();
+const { logout } = useStrapiAuth();
+
 
 const { addNotification } = useNotification();
 
@@ -25,18 +19,31 @@ const showLogoutModal = () => {
   logoutModal.value = true
 }
 
-const logOut = () => {
+const logOut = async () => {
   logout()
   logoutModal.value = false;
   addNotification('شما با موفقیت خارج شدید', NOTIFICATION_TYPES.error, '', 5000)
+  user.value = null
 }
 
-const $user = await fetchUser()
 const userAvatar = computed(() => {
-  const avatarUrl = $user.value?.avatar?.url
+  const avatarUrl = user.value?.avatar?.url
   if (avatarUrl) return normalizedStrapiImgSrcs(avatarUrl)
   return '/images/user-photo.png'
 })
+
+const route = useRoute();
+const searchText = ref<string>(route.query?.searchItem ? route.query?.searchItem + '' : '')
+const searchInPosts = () => {
+  if (searchText.value && searchText.value.length) {
+    navigateTo({
+      name: 'posts-search', query: {
+        searchItem: searchText.value
+      }
+    })
+  }
+
+}
 
 </script>
 <template>
@@ -77,7 +84,7 @@ const userAvatar = computed(() => {
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <VIcon name="heroicons:magnifying-glass" class="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
-              <input id="search" name="search"
+              <input id="search" name="search" v-model="searchText" @keydown.enter="searchInPosts"
                 class="block w-full rounded-md border border-transparent bg-gray-700 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-white focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-white sm:text-sm"
                 placeholder="جستوجو" type="search" />
             </div>
@@ -92,41 +99,43 @@ const userAvatar = computed(() => {
             <VIcon name="heroicons:x-mark" v-else class="block h-6 w-6" aria-hidden="true" />
           </HeadlessDisclosureButton>
         </div>
-        <div class="hidden lg:mr-4 lg:block" v-if="$user">
-          <div class="flex items-center">
-            <HeadlessMenu as="div" class="relative mr-4 flex-shrink-0">
-              <div>
-                <HeadlessMenuButton
-                  class="flex rounded-full bg-gray-800  text-sm text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" :src="userAvatar" alt="" />
-                </HeadlessMenuButton>
-                <transition enter-active-class="transition ease-out duration-100"
-                  enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                  leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
-                  leave-to-class="transform opacity-0 scale-95">
-                  <HeadlessMenuItems
-                    class="absolute border-2 border-gray-700 left-0 z-10 mt-4 w-48 origin-top-right rounded-md bg-gray-800  py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <HeadlessMenuItem v-slot="{ active }">
-                      <p :class="[active ? 'bg-gray-700' : '', 'block px-4 py-2 text-sm text-gray-50']">
-                        {{ $user?.firstName + ' ' + $user?.lastName }}
-                      </p>
-                    </HeadlessMenuItem>
-                    <HeadlessMenuItem v-if="$user" v-slot="{ active }">
-                      <button @click="showLogoutModal"
-                        :class="[active ? 'bg-rose-700' : '', 'block w-full text-right px-4 py-2 text-sm text-gray-50']">
-                        خروج
-                      </button>
-                    </HeadlessMenuItem>
-                  </HeadlessMenuItems>
-                </transition>
-              </div>
-            </HeadlessMenu>
+        <ClientOnly>
+          <div class="hidden lg:mr-4 lg:block" v-if="user">
+            <div class="flex items-center">
+              <HeadlessMenu as="div" class="relative mr-4 flex-shrink-0">
+                <div>
+                  <HeadlessMenuButton
+                    class="flex rounded-full bg-gray-800  text-sm text-white focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span class="sr-only">Open user menu</span>
+                    <img class="h-8 w-8 rounded-full" :src="userAvatar" alt="" />
+                  </HeadlessMenuButton>
+                  <transition enter-active-class="transition ease-out duration-100"
+                    enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                    leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
+                    leave-to-class="transform opacity-0 scale-95">
+                    <HeadlessMenuItems
+                      class="absolute border-2 border-gray-700 left-0 z-10 mt-4 w-48 origin-top-right rounded-md bg-gray-800  py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <HeadlessMenuItem v-slot="{ active }">
+                        <p :class="[active ? 'bg-gray-700' : '', 'block px-4 py-2 text-sm text-gray-50']">
+                          {{ user?.firstName + ' ' + user?.lastName }}
+                        </p>
+                      </HeadlessMenuItem>
+                      <HeadlessMenuItem v-if="user" v-slot="{ active }">
+                        <button @click="showLogoutModal"
+                          :class="[active ? 'bg-rose-700' : '', 'block w-full text-right px-4 py-2 text-sm text-gray-50']">
+                          خروج
+                        </button>
+                      </HeadlessMenuItem>
+                    </HeadlessMenuItems>
+                  </transition>
+                </div>
+              </HeadlessMenu>
+            </div>
           </div>
-        </div>
+        </ClientOnly>
 
         <div class="hidden lg:inline-block">
-          <div class="mr-10 flex items-center justify-start gap-5" v-if="!$user">
+          <div class="mr-10 flex items-center justify-start gap-5" v-if="!user">
             <NuxtLink to="/auth/register" class="btn btn-primary btn-sm">
               ثبت نام
             </NuxtLink>
@@ -147,14 +156,14 @@ const userAvatar = computed(() => {
           class="route block rounded-md px-3 py-2 text-base font-medium text-white">
           {{ route.title }}
         </NuxtLink>
-        <div v-if="$user">
+        <div v-if="user">
           <button
             class="block rounded-md px-3 py-2 text-base font-medium text-white bg-rose-500/10 hover:bg-rose-500 w-full text-right transition-colors"
             @click="showLogoutModal">خروج</button>
         </div>
       </div>
       <div class="border-t border-gray-700 pt-4 pb-3  flex items-center justify-between pr-2 pl-4">
-        <div class="flex items-center px-5" v-if="$user">
+        <div class="flex items-center px-5" v-if="user">
           <div class="flex-shrink-0">
             <img class="h-10 w-10 rounded-full" :src="userAvatar" alt="User image" />
           </div>
