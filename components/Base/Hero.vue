@@ -18,10 +18,10 @@
             <VIcon name="heroicons:envelope" size="20px" />
             دنبال کردن
           </NuxtLink>
-          <a href="#" class="text-base font-semibold leading-7 text-white">
+          <NuxtLink to="/posts" class="text-base font-semibold leading-7 text-white">
             مطالعه بیشتر
             <span aria-hidden="true" class="m-1">→</span>
-          </a>
+          </NuxtLink>
         </div>
       </div>
       <div class="basis-1/2">
