@@ -5,10 +5,19 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 UI ==> TailwindCSS
 
-## Setup
+## --- ⭕ NOTICE! ⭕ ---
+### For works correctly you *MUST* install and run backend strapi project first...
+### - To install and know how to run it you can see [here](https://github.com/dinno7/cs-back-strapi)
 
-Make sure to install the dependencies:
+## `Setup`
+First clone this repo in some directory in your PC:
 
+```bash
+git clone https://github.com/dinno7/cs-front
+```
+
+Then install dependencies:
+Go to directory that cloned and run below command:
 ```bash
 # yarn
 yarn install
@@ -20,7 +29,7 @@ npm install
 pnpm install
 ```
 
-## Development Server
+## `Development Server`
 
 Start the development server on `http://localhost:4000` or `http://127.0.0.1:4000`
 
@@ -28,7 +37,7 @@ Start the development server on `http://localhost:4000` or `http://127.0.0.1:400
 npm run dev
 ```
 
-## Production
+## `Production`
 
 Build the application for production:
 
