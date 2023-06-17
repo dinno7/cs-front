@@ -45,11 +45,11 @@ const postImage = computed(() => {
       </div>
       <div class="mb-7 mt-5">
         <h2 class="mb-2 font-bold text-gray-900 text-lg dark:text-gray-50">{{ post.title }}</h2>
-        <p class="line-clamp-5 text-justify dark:text-gray-400">
+        <p class="line-clamp-3 text-justify dark:text-gray-400">
           {{ post.brief || 'برای مشاهده کامل این پست میتوانید روی این پست کلیک کرده تا وارد صفحه این پست شوید' }}
         </p>
       </div>
-      <div class="flex gap-2 items-center justify-between border-t-2  w-full pt-5 border-gray-700 ">
+      <div class="flex gap-2 items-center justify-between border-t-2  w-full pt-3 border-gray-700">
         <PostAuthor :author="post.author" v-if="post?.author?.id" />
         <p class="text-sm text-gray-500 pb-1 self-end">
           آخرین آپدیت

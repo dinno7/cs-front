@@ -28,6 +28,7 @@ const fetchPosts = async () => {
         '$or][0][title][$containsi': route.query.searchItem,
         '$or][1][content][$containsi': route.query.searchItem,
         '$or][2][brief][$containsi': route.query.searchItem,
+        // '$or][3][category][name][$containsi': route.query.searchItem,
       },
       populate: ['image', 'author', 'author.avatar', 'category'],
       sort: 'createdAt:desc',

@@ -53,7 +53,7 @@ await fetchOnePost()
         <div
           class="text-3xl text-gray-300 bg-gray-700/30 rounded-md backdrop-blur-md absolute z-10 left-1/2 bottom-5 -translate-x-1/2 p-3 transition-all duration-300 ease-in-out group-hover:bg-gray-700/50 group-hover:scale-125 group-hover:backdrop-blur-xl  group-hover:bottom-1/2 group-hover:translate-y-1/2">
           <p v-if="post.brief"
-            class="text-lg text-justify line-clamp-3 transition-all ease-in-out duration-300 group-hover:line-clamp-[10]">
+            class="text-lg text-right line-clamp-3 transition-all ease-in-out duration-300 group-hover:line-clamp-[10]">
             {{ post.brief }}
           </p>
         </div>

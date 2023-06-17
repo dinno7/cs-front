@@ -23,6 +23,10 @@
 		list-style-position: inside;
 		padding: 10px;
 	}
+	h2,
+	h3 {
+		@apply text-3xl pb-2 font-semibold;
+	}
 
 	.container {
 		@apply px-5;

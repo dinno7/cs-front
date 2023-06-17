@@ -114,7 +114,7 @@ const submitForm = async () => {
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-50"> ایمیل یا نام کاربری </label>
                 <div class="mt-1">
-                  <input type="text" v-model="userInfo.identifier" autocomplete="email" required="true"
+                  <input type="text" dir="ltr" v-model="userInfo.identifier" autocomplete="email" required="true"
                     class="appearance-none caret-gray-50 block w-full px-3 py-2 border border-gray-600 text-white bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
@@ -122,12 +122,12 @@ const submitForm = async () => {
               <div class="space-y-1">
                 <label for="password" class="flex items-center justify-between text-sm font-medium text-gray-50">
                   <span>رمزعبور</span>
-                  <NuxtLink class="text-blue-400 hover:text-blue-300 font-bold" to="/auth/resetPassword">رمز خود را
-                    فراموش کردید؟</NuxtLink>
+                  <!-- <NuxtLink class="text-blue-400 hover:text-blue-300 font-bold" to="/auth/resetPassword">رمز خود را
+                    فراموش کردید؟</NuxtLink> -->
                 </label>
                 <div class="mt-1">
-                  <input id="password" name="password" type="password" autocomplete="current-password" required="true"
-                    v-model="userInfo.password"
+                  <input id="password" dir="ltr" name="password" type="password" autocomplete="current-password"
+                    required="true" v-model="userInfo.password"
                     class="appearance-none text-white caret-gray-50 block w-full px-3 py-2 border border-gray-600 bg-gray-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
